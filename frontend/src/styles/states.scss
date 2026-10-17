@@ -1,0 +1,108 @@
+/**
+ * 横切状态样式：加载骨架、空态、错误态、只读蒙层。
+ * fe-01 §6.4 要求「首次加载骨架屏、刷新局部 loading」，禁止全屏遮罩盖住已渲染内容，
+ * 所以这里只提供区块级原语，不提供全屏 loading。
+ */
+
+/* ---------------- 骨架屏 ---------------- */
+
+.elt-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--elt-bg-elevated) 25%,
+    #22304a 37%,
+    var(--elt-bg-elevated) 63%
+  );
+  background-size: 400% 100%;
+  border-radius: 6px;
+  animation: elt-skeleton-shimmer 1.4s ease infinite;
+}
+
+@keyframes elt-skeleton-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+/* 尊重系统的「减少动态效果」设置，避免前庭不适 */
+@media (prefers-reduced-motion: reduce) {
+  .elt-skeleton {
+    animation: none;
+  }
+}
+
+/* 块级骨架：撑满容器宽度，高度由 style 传入（见 SectionCard / QueryTable） */
+.elt-skeleton--block {
+  width: 100%;
+}
+
+/* ---------------- 区块局部 loading 蒙层 ---------------- */
+
+.elt-block-loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.elt-block-loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 18, 32, 0.55);
+  border-radius: var(--elt-radius-card);
+}
+
+/* ---------------- 等宽与截断 ---------------- */
+
+.elt-mono {
+  font-family: var(--elt-font-mono);
+  font-variant-ligatures: none;
+}
+
+/* 指纹、表名等长标识：单行省略 + 悬停 tooltip */
+.elt-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------- 只读态 ---------------- */
+
+/* 冻结版本整页只读时套在容器上；不 disable 控件本身，
+   以便 HOCON/DAG 等只读查看区仍可选中复制 */
+.elt-readonly-veil {
+  position: relative;
+}
+
+.elt-readonly-veil::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px dashed var(--elt-border-subtle);
+  border-radius: var(--elt-radius-card);
+  pointer-events: none;
+}
+
+/* ---------------- 滚动条：深色细条 ---------------- */
+
+.elt-scroll {
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #33425f transparent;
+}
+
+.elt-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.elt-scroll::-webkit-scrollbar-thumb {
+  background: #33425f;
+  border-radius: var(--elt-radius-pill);
+}
+
+.elt-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}

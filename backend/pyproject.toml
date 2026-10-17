@@ -1,0 +1,86 @@
+[project]
+name = "elt-agent-backend"
+version = "0.1.0"
+description = "生产级 ETL-Agent 数据集成平台 · 控制面后端"
+readme = "../README.md"
+requires-python = ">=3.12"
+dependencies = [
+    # --- Web 框架 ---
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "python-multipart>=0.0.12",
+    # --- 配置与校验 ---
+    "pydantic>=2.9",
+    "pydantic-settings>=2.5",
+    # --- 数据库 ---
+    "sqlalchemy[asyncio]>=2.0.35",
+    "asyncpg>=0.30",
+    "alembic>=1.13",
+    "aiomysql>=0.2",          # 演示源库 MySQL
+    # --- 缓存与异步 ---
+    "redis>=5.1",
+    "celery[redis]>=5.4",
+    # --- 编排 ---
+    "langgraph>=0.2.34",
+    "langgraph-checkpoint-postgres>=2.0",
+    # --- 外部系统 ---
+    "httpx>=0.27",            # DeepSeek / SeaTunnel REST
+    "hvac>=2.3",              # Vault KV v2
+    "minio>=7.2",
+    # --- 安全 ---
+    "cryptography>=43",       # Ed25519 签名
+    "pyjwt>=2.9",
+    "pwdlib[argon2]>=0.2",
+    # --- 可观测 ---
+    "structlog>=24.4",
+    "prometheus-client>=0.21",
+    "pyhocon>=0.3.63",
+    "psycopg[binary]>=3.3.6",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "pytest-cov>=6.0",
+    "ruff>=0.7",
+    "mypy>=1.13",
+    "aiosqlite>=0.22.1",
+    "fakeredis>=2.40.0",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC", "S", "RUF"]
+ignore = [
+    "S101",   # 允许 assert（测试与 engines 层的前置校验）
+    "B008",   # FastAPI Depends() 默认值写法
+    # 本项目注释与文案一律中文（CLAUDE.md §6），全角标点是有意为之而非笔误，
+    # 因此关闭「易混淆 Unicode」系列规则——它们的前提是英文书写习惯。
+    "RUF001",  # 易混淆 Unicode 字符（字符串）
+    "RUF002",  # 易混淆 Unicode 字符（docstring）
+    "RUF003",  # 易混淆 Unicode 字符（注释）
+    "RUF022",  # __all__ 强制排序：本仓库按「领域分组 + 组内注释」组织导出，分组比字母序更可读
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S", "E501"]
+"models/enums.py" = ["S105"]   # 枚举成员名 SECRET_MATERIALIZED 被误判为硬编码口令
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["engines", "harness"]     # 只对纯逻辑层强制严格类型，避免拖慢业务迭代
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = [
+    "integration: 需要真实 PG/Redis（compose 内）",
+    "e2e: 端到端全链路",
+]

@@ -1,0 +1,58 @@
+/**
+ * 设计令牌：与《前端原型图.pen》的 variables 逐字对齐。
+ * 原型是唯一视觉事实来源，这里不得自行发明色值。
+ * 输出为 CSS 自定义属性，便于 Element Plus 覆盖与运行时主题切换。
+ */
+
+:root {
+  /* 背景四层：app（最底）→ surface（卡片）→ elevated（悬浮/表头）→ code（代码块） */
+  --elt-bg-app: #0b1220;
+  --elt-bg-surface: #111a2b;
+  --elt-bg-elevated: #1a2437;
+  --elt-bg-code: #070c16;
+
+  --elt-border-subtle: #27344d;
+
+  /* 文字三级：primary（正文）/ secondary（次要）/ muted（标签、占位） */
+  --elt-text-primary: #e6edf7;
+  --elt-text-secondary: #94a6c0;
+  --elt-text-muted: #64748b;
+  --elt-code-text: #9fb3ce;
+
+  --elt-accent: #3b82f6;
+  --elt-accent-soft: #1d3a6b;
+
+  --elt-success: #22c55e;
+  --elt-warn: #f59e0b;
+  --elt-danger: #ef4444;
+  --elt-risk-p1: #f97316;
+  --elt-risk-p2: #eab308;
+
+  /* 徽章底色：主色的 25% 透明度，用于浅色描边徽章 */
+  --elt-badge-accent: #3b82f640;
+  --elt-badge-success: #22c55e40;
+  --elt-badge-warn: #f59e0b40;
+  --elt-badge-danger: #ef444440;
+  --elt-badge-p1: #f9731640;
+  --elt-badge-p2: #eab30840;
+  --elt-badge-muted: #64748b40;
+
+  --elt-font-ui: Inter, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', Arial, sans-serif;
+  --elt-font-mono: 'JetBrains Mono', 'Cascadia Mono', Consolas, 'Courier New', monospace;
+
+  /* 布局尺寸：与原型图的帧结构一致 */
+  --elt-prodbar-height: 32px;
+  --elt-navbar-height: 56px;
+  --elt-sidebar-width: 240px;
+  --elt-page-padding: 20px;
+  --elt-radius-card: 12px;
+  --elt-radius-control: 8px;
+  --elt-radius-pill: 999px;
+}
+
+/* 供 SCSS 侧复用（JS 无法读取 SCSS 变量，故仅在此集中声明一次） */
+$elt-prodbar-height: 32px;
+$elt-navbar-height: 56px;
+$elt-sidebar-width: 240px;
+$elt-page-padding: 20px;

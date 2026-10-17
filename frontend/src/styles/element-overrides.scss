@@ -1,0 +1,158 @@
+/**
+ * Element Plus 深色覆盖。
+ * 只改 Element Plus 自己的 CSS 变量与少数结构性类名，不逐个组件写样式，
+ * 避免 Element Plus 升级后大面积失配。
+ */
+
+:root {
+  /* 主色阶：Element Plus 需要 3/5/7/8/9 各档，这里按主色线性派生 */
+  --el-color-primary: var(--elt-accent);
+  --el-color-primary-light-3: #5c9bf8;
+  --el-color-primary-light-5: #7fb0fa;
+  --el-color-primary-light-7: #a8cbfc;
+  --el-color-primary-light-8: #c1dafd;
+  --el-color-primary-light-9: #1d3a6b;
+  --el-color-primary-dark-2: #2f68c5;
+
+  --el-color-success: var(--elt-success);
+  --el-color-success-light-9: #14301f;
+  --el-color-warning: var(--elt-warn);
+  --el-color-warning-light-9: #33260c;
+  --el-color-danger: var(--elt-danger);
+  --el-color-danger-light-9: #331418;
+  --el-color-error: var(--elt-danger);
+  --el-color-info: var(--elt-text-muted);
+  --el-color-info-light-9: var(--elt-bg-elevated);
+
+  --el-bg-color: var(--elt-bg-surface);
+  --el-bg-color-page: var(--elt-bg-app);
+  --el-bg-color-overlay: var(--elt-bg-elevated);
+
+  --el-text-color-primary: var(--elt-text-primary);
+  --el-text-color-regular: var(--elt-text-secondary);
+  --el-text-color-secondary: var(--elt-text-muted);
+  --el-text-color-placeholder: var(--elt-text-muted);
+  --el-text-color-disabled: #4a5a75;
+
+  --el-border-color: var(--elt-border-subtle);
+  --el-border-color-light: var(--elt-border-subtle);
+  --el-border-color-lighter: #202c42;
+  --el-border-color-extra-light: #1a2437;
+  --el-border-color-dark: #33425f;
+  --el-border-color-darker: #3d4e6e;
+
+  --el-fill-color: var(--elt-bg-elevated);
+  --el-fill-color-light: #16203200;
+  --el-fill-color-lighter: #16203200;
+  --el-fill-color-blank: var(--elt-bg-surface);
+
+  --el-mask-color: rgba(3, 7, 14, 0.8);
+  --el-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --el-box-shadow-light: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --el-box-shadow-lighter: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  --el-font-family: var(--elt-font-ui);
+  --el-border-radius-base: var(--elt-radius-control);
+  --el-border-radius-small: 6px;
+
+  /* 表格：原型图里表头是 elevated 底色，正文与卡片同色 */
+  --el-table-bg-color: transparent;
+  --el-table-tr-bg-color: transparent;
+  --el-table-header-bg-color: var(--elt-bg-elevated);
+  --el-table-header-text-color: var(--elt-text-muted);
+  --el-table-text-color: var(--elt-text-secondary);
+  --el-table-border-color: var(--elt-border-subtle);
+  --el-table-row-hover-bg-color: var(--elt-bg-elevated);
+
+  --el-dialog-bg-color: var(--elt-bg-surface);
+  --el-drawer-bg-color: var(--elt-bg-surface);
+  --el-popover-bg-color: var(--elt-bg-elevated);
+  --el-card-bg-color: var(--elt-bg-surface);
+}
+
+/* 表头字重与字号：原型图表头是 11px/600，比 Element Plus 默认更轻更小 */
+.el-table th.el-table__cell {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.el-table {
+  font-size: 13px;
+}
+
+/* 表格去掉外框描边，由页面卡片提供边框，避免出现「双层线」 */
+.el-table--border::after,
+.el-table--group::after,
+.el-table::before {
+  display: none;
+}
+
+/* 输入类控件在深色底上需要显式底色，否则会沿用浅色默认值 */
+.el-input__wrapper,
+.el-textarea__inner,
+.el-select__wrapper,
+.el-input-number,
+.el-date-editor.el-input__wrapper {
+  background-color: var(--elt-bg-elevated);
+  box-shadow: 0 0 0 1px var(--elt-border-subtle) inset;
+}
+
+.el-input__wrapper.is-focus,
+.el-select__wrapper.is-focused,
+.el-textarea__inner:focus {
+  box-shadow: 0 0 0 1px var(--elt-accent) inset;
+}
+
+/* 只读态：原型图里冻结版本整页只读，控件要能一眼看出不可改 */
+.el-input.is-disabled .el-input__wrapper,
+.el-textarea.is-disabled .el-textarea__inner {
+  background-color: #0e1726;
+  box-shadow: 0 0 0 1px #1e2a3e inset;
+}
+
+/* 标签：统一为胶囊形，与原型图的徽章一致 */
+.el-tag {
+  border-radius: var(--elt-radius-pill);
+  font-weight: 600;
+  border-width: 1px;
+}
+
+/* 代码/指纹一律等宽 */
+.el-tag.is-mono,
+.elt-mono {
+  font-family: var(--elt-font-mono);
+}
+
+.el-tabs__item {
+  font-size: 13px;
+}
+
+.el-menu {
+  border-right: none;
+  background-color: transparent;
+}
+
+.el-message-box {
+  background-color: var(--elt-bg-surface);
+}
+
+.el-alert--error.is-light {
+  background-color: #2a1216;
+  color: #f8a5a5;
+}
+
+.el-alert--warning.is-light {
+  background-color: #2d2208;
+  color: #f3cc7a;
+}
+
+.el-alert--success.is-light {
+  background-color: #0f2a1a;
+  color: #86e0a8;
+}
+
+.el-alert--info.is-light {
+  background-color: var(--elt-bg-elevated);
+  color: var(--elt-text-secondary);
+}

@@ -1,0 +1,43 @@
+# ---------- Python ----------
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+
+# ---------- 虚拟环境 ----------
+.venv/
+venv/
+
+# ---------- 密钥与凭据（绝不进仓库）----------
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+!deploy/**/*.pub
+
+# ---------- 前端 ----------
+node_modules/
+frontend/dist/
+frontend/.vite/
+*.local
+
+# ---------- 运行时产物 ----------
+logs/
+*.log
+tmp/
+data/
+
+# ---------- 编辑器 / 系统 ----------
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!--
+  class="dark" 直接写在 html 上，而不是等 main.ts 执行时再加：
+  控制台恒为暗色（见 main.ts 的说明），若靠 JS 加类，首帧会是白底再闪成暗色。
+  这里先落类，Element Plus 的 dark css-vars 才能在第一帧就生效。
+-->
+<html lang="zh-CN" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>ELT-Agent 数据集成平台</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
